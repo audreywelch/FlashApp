@@ -32,6 +32,15 @@ class ReviewViewController: UIViewController {
         button.centerXAnchor.constraint(equalTo: rootView.centerXAnchor).isActive = true
         button.centerYAnchor.constraint(equalTo: rootView.centerYAnchor).isActive = true
         
+        let quizButton = QuizButton()
+        quizButton.translatesAutoresizingMaskIntoConstraints = false
+        rootView.addSubview(quizButton)
+        
+        quizButton.widthAnchor.constraint(equalToConstant: 294).isActive = true
+        quizButton.heightAnchor.constraint(equalToConstant: 64).isActive = true
+        
+        quizButton.centerXAnchor.constraint(equalTo: rootView.centerXAnchor).isActive = true
+        quizButton.topAnchor.constraint(equalTo: button.bottomAnchor, constant: 18).isActive = true
         
         // Assign the view we are creating to the view controller
         self.view = rootView
