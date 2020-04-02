@@ -34,6 +34,7 @@ class ReviewViewController: UIViewController {
         
         let quizButton = QuizButton()
         quizButton.translatesAutoresizingMaskIntoConstraints = false
+        quizButton.addTarget(self, action: #selector(testTheQuizButton(_:)), for: .primaryActionTriggered)
         rootView.addSubview(quizButton)
         
         quizButton.widthAnchor.constraint(equalToConstant: 294).isActive = true
@@ -48,6 +49,10 @@ class ReviewViewController: UIViewController {
     
     @IBAction func testTheButton(_ sender: UIButton) {
         print("The button was actually tapped")
+    }
+    
+    @IBAction func testTheQuizButton(_ sender: QuizButton) {
+        print("The quiz button was actually tapped")
     }
 
     override func viewDidLoad() {

@@ -9,6 +9,31 @@
 import UIKit
 
 class QuizButton: UIControl {
+    
+    enum ButtonState: String {
+        case waiting
+        case chosenCorrect
+        case chosenIncorrect
+        case notChosen
+        case notChosenCorrect
+    }
+    
+    var buttonState: ButtonState = .waiting {
+        didSet {
+            switch buttonState {
+            case .waiting:
+                backgroundView.image = UIImage(named: "QuizButtonNormal")
+            case .chosenCorrect:
+                backgroundView.image = UIImage(named: "QuizButtonChosenCorrect")
+            case .chosenIncorrect:
+                backgroundView.image = UIImage(named: "QuizButtonChosenIncorrect")
+            case .notChosen:
+                backgroundView.image = UIImage(named: "QuizButtonNotChosen")
+            case .notChosenCorrect:
+                backgroundView.image = UIImage(named: "QuizButtonNotChosenCorrect")
+            }
+        }
+    }
 
     lazy var backgroundView: UIImageView = {
         let imageView = UIImageView()
@@ -37,10 +62,19 @@ class QuizButton: UIControl {
     
     func createSubviews() {
         
-        self.backgroundColor = UIColor(white: 1, alpha: 0.5)
-        
         let _ = backgroundView // Create the backgroundView and add it
-        backgroundView.backgroundColor = UIColor(hue: CGFloat.random(in: 0...1), saturation: 1, brightness: 1, alpha: 0.2)
+        backgroundView.image = UIImage(named: "QuizButtonNormal")
+        
+    }
+    
+    override var isHighlighted: Bool {
+        didSet {
+            if isHighlighted {
+                backgroundView.image = UIImage(named: "QuizButtonHighlighted")
+            } else {
+                backgroundView.image = UIImage(named: "QuizButtonNormal")
+            }
+        }
     }
 
 }
