@@ -12,7 +12,7 @@ import SwiftUI
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
-
+    // var navController: UINavigationController!
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
@@ -21,19 +21,50 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         // Get the managed object context from the shared persistent container.
         let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+        
+//        let rootController = UIViewController()
+//        rootController.view.backgroundColor = .systemRed
+//
+//        let button = UIButton(type: .infoLight)
+//        button.center = CGPoint(x: rootController.view.bounds.midX,
+//                                y: rootController.view.bounds.midY)
+//
+//        rootController.view.addSubview(button)
+//
+//        button.addTarget(self, action: #selector(goToNextScreen(_:)), for: .primaryActionTriggered)
+//
+//        // Create navigation view controller
+//        // Assign the root view controller to our navigation controller
+//        navController = UINavigationController(rootViewController: rootController)
+        
+        let reviewController = ReviewViewController()
 
-        // Create the SwiftUI view and set the context as the value for the managedObjectContext environment keyPath.
-        // Add `@Environment(\.managedObjectContext)` in the views that will need the context.
-        let contentView = ContentView().environment(\.managedObjectContext, context)
 
         // Use a UIHostingController as window root view controller.
         if let windowScene = scene as? UIWindowScene {
+            
+            // Create a window (doesn't exist b/c no storyboard)
+            // Assign it to the window scene
             let window = UIWindow(windowScene: windowScene)
-            window.rootViewController = UIHostingController(rootView: contentView)
+            
+            // Assign navigation controller to our window
+            window.rootViewController = reviewController
             self.window = window
+            
+            // Make window first responder
+            // Make key (bring window forward) and make visible (show it on the screen)
             window.makeKeyAndVisible()
         }
     }
+    
+//    @IBAction func goToNextScreen(_ sender: Any) {
+//        print("Action was called!")
+//
+//        let secondaryController = UIViewController()
+//        secondaryController.view.backgroundColor = .systemYellow
+//
+//        navController.pushViewController(secondaryController, animated: true)
+//    }
 
     func sceneDidDisconnect(_ scene: UIScene) {
         // Called as the scene is being released by the system.
