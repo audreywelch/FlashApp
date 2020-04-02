@@ -24,8 +24,19 @@ class QuizButton: UIControl {
         }
     }
     
+    let defaultTintColors: [ButtonState: UIColor] = [
+        .waiting: UIColor(named: "QuizButtonTintColor")!,
+        .chosenCorrect: UIColor(named: "QuizButtonTintColor")!,
+        .chosenIncorrect: UIColor(named: "QuizButtonIncorrectTintColor")!,
+        .notChosen: UIColor(named: "QuizButtonTintColor")!,
+        .notChosenCorrect: UIColor(named: "QuizButtonTintColor")!
+    ]
+    
+    let tintColors: [ButtonState: UIColor] = [:]
+    
     func updateButtonState() {
         statusIconView.image = nil
+        statusIconView.tintColor = defaultTintColors[buttonState]
          
         switch buttonState {
         case .waiting:
