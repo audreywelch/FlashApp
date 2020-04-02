@@ -20,26 +20,31 @@ class QuizButton: UIControl {
     
     var buttonState: ButtonState = .waiting {
         didSet {
-            updateBackgroundImage()
+            updateButtonState()
         }
     }
     
-    func updateBackgroundImage() {
-        if isHighlighted {
-            backgroundView.image = UIImage(named: "QuizButtonHighlighted")
-        } else {
-            switch buttonState {
-            case .waiting:
+    func updateButtonState() {
+        statusIconView.image = nil
+         
+        switch buttonState {
+        case .waiting:
+            if isHighlighted {
+                backgroundView.image = UIImage(named: "QuizButtonHighlighted")
+            } else {
                 backgroundView.image = UIImage(named: "QuizButtonNormal")
-            case .chosenCorrect:
-                backgroundView.image = UIImage(named: "QuizButtonChosenCorrect")
-            case .chosenIncorrect:
-                backgroundView.image = UIImage(named: "QuizButtonChosenIncorrect")
-            case .notChosen:
-                backgroundView.image = UIImage(named: "QuizButtonNotChosen")
-            case .notChosenCorrect:
-                backgroundView.image = UIImage(named: "QuizButtonNotChosenCorrect")
             }
+        case .chosenCorrect:
+            backgroundView.image = UIImage(named: "QuizButtonChosenCorrect")
+            statusIconView.image = UIImage(named: "QuizButtonIconCorrectOption")
+        case .chosenIncorrect:
+            backgroundView.image = UIImage(named: "QuizButtonChosenIncorrect")
+            statusIconView.image = UIImage(named: "QuizButtonIconIncorrectOption")
+        case .notChosen:
+            backgroundView.image = UIImage(named: "QuizButtonNotChosen")
+        case .notChosenCorrect:
+            backgroundView.image = UIImage(named: "QuizButtonNotChosenCorrect")
+            statusIconView.image = UIImage(named: "QuizButtonIconCorrectOption")
         }
     }
 
@@ -58,6 +63,22 @@ class QuizButton: UIControl {
         return imageView
     }()
     
+    lazy var statusIconView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        
+        // Configure
+        self.addSubview(imageView)
+        
+        imageView.widthAnchor.constraint(equalToConstant: 28).isActive = true
+        imageView.heightAnchor.constraint(equalToConstant: 28).isActive = true
+        
+        imageView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 18).isActive = true
+        imageView.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
+        
+        return imageView
+    }()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         createSubviews()
@@ -70,19 +91,22 @@ class QuizButton: UIControl {
     
     func createSubviews() {
         
-        let _ = backgroundView // Create the backgroundView and add it
         backgroundView.image = UIImage(named: "QuizButtonNormal")
+        statusIconView.image = nil
         
         self.addTarget(self, action: #selector(triggerPrimaryAction(_:)), for: .touchUpInside)
     }
     
     override var isHighlighted: Bool {
         didSet {
-            updateBackgroundImage()
+            updateButtonState()
         }
     }
     
     @IBAction func triggerPrimaryAction(_ sender: QuizButton) {
+        
+        // Make sure that the button state is waiting if we want to go further into the function
+        guard buttonState == .waiting else { return }
         self.sendActions(for: .primaryActionTriggered)
     }
 
