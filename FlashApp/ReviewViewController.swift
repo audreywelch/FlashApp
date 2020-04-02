@@ -53,6 +53,8 @@ class ReviewViewController: UIViewController {
     
     @IBAction func testTheQuizButton(_ sender: QuizButton) {
         print("The quiz button was actually tapped")
+        
+        sender.buttonState = .chosenIncorrect
     }
 
     override func viewDidLoad() {

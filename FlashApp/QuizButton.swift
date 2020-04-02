@@ -20,6 +20,14 @@ class QuizButton: UIControl {
     
     var buttonState: ButtonState = .waiting {
         didSet {
+            updateBackgroundImage()
+        }
+    }
+    
+    func updateBackgroundImage() {
+        if isHighlighted {
+            backgroundView.image = UIImage(named: "QuizButtonHighlighted")
+        } else {
             switch buttonState {
             case .waiting:
                 backgroundView.image = UIImage(named: "QuizButtonNormal")
@@ -65,16 +73,17 @@ class QuizButton: UIControl {
         let _ = backgroundView // Create the backgroundView and add it
         backgroundView.image = UIImage(named: "QuizButtonNormal")
         
+        self.addTarget(self, action: #selector(triggerPrimaryAction(_:)), for: .touchUpInside)
     }
     
     override var isHighlighted: Bool {
         didSet {
-            if isHighlighted {
-                backgroundView.image = UIImage(named: "QuizButtonHighlighted")
-            } else {
-                backgroundView.image = UIImage(named: "QuizButtonNormal")
-            }
+            updateBackgroundImage()
         }
+    }
+    
+    @IBAction func triggerPrimaryAction(_ sender: QuizButton) {
+        self.sendActions(for: .primaryActionTriggered)
     }
 
 }
