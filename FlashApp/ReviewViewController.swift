@@ -84,7 +84,52 @@ class ReviewViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+<<<<<<< Updated upstream
         // Do any additional setup after loading the view.
+=======
+//        let xTilt = UIInterpolatingMotionEffect(keyPath: "parallaxCenter.x", type: .tiltAlongHorizontalAxis)
+//        let yTilt = UIInterpolatingMotionEffect(keyPath: "parallaxCenter.y", type: .tiltAlongVerticalAxis)
+//
+//        xTilt.minimumRelativeValue = -50 as NSNumber
+//        xTilt.maximumRelativeValue = 50 as NSNumber
+//        yTilt.minimumRelativeValue = -50 as NSNumber
+//        yTilt.maximumRelativeValue = 50 as NSNumber
+//
+//        let motionEffectGroup = UIMotionEffectGroup()
+//        motionEffectGroup.motionEffects = [xTilt, yTilt]
+//        self.view.addMotionEffect(motionEffectGroup)
+//
+//        self.becomeFirstResponder()
+    }
+    
+    override func viewWillLayoutSubviews() {
+        
+        var cardFrame = CGRect(x: 20,
+                               y: 120,
+                               width: UIScreen.main.bounds.width - 20*2,
+                               height: UIScreen.main.bounds.height - 120*2)
+        
+        var scaleFactor: CGFloat = 1
+        
+        for card in cards.reversed() {
+            card.transform = .identity
+            card.frame = cardFrame
+            cardFrame.origin.y -= 85 * scaleFactor
+            card.fogView.alpha = 1 - scaleFactor
+            
+            // Manipulate the center with the tilt of the device
+//            cardFrame.origin.x += rootView.parallaxCenter.x
+//            cardFrame.origin.y += rootView.parallaxCenter.y
+            
+            card.transform = CGAffineTransform(scaleX: scaleFactor, y: scaleFactor)
+            
+            scaleFactor *= 0.786
+        }
+        
+    
+        
+        super.viewWillLayoutSubviews()
+>>>>>>> Stashed changes
     }
     
 
